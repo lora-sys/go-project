@@ -78,10 +78,10 @@ var s string = fmt.Sprintf("%d", i)
 //
 
 func main() {
-	str:="hello"
+   str:="go 语言"
 	fmt.Println(len(str))
 	fmt.Println([]byte(str))
-	fmt.Println([]rune(str))
+	fmt.Println(len([]rune(str)))
 	// fmt.Println(string([]byte(str)))
 	// fmt.Println(string([]rune(str)))
 //6
