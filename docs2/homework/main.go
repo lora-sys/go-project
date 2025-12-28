@@ -4,24 +4,32 @@ import (
 	"fmt"
 	"flag"
 	"time"
+	"log"
+	"os"
+	"unicode/utf8"
+
 )
 
+var(
+	timeFormat = flag.String("timefmt",time.RFC3339, "layout for print current time")
+)
 
+func init() {
+	flag.Parse()
+}
 
 func main() {
-	fmt.Println("当前时间:",time.Now().Format("2006-01-02 15:04:05"))
-	flag.Parse()
-	fmt.Println("命令行参数:", flag.Args())
-	var str string
-	fmt.Println("请输入一个字符串")
-	fmt.Scanln(&str)
-	fmt.Println("您输入的字符串是:", str)
+	log.SetPrefix("[demo]")
+	log.SetFlags(0)
 
-	fmt.Printf("字节长度:%d\n",len(str));
-	fmt.Printf("rune 数：%d\n",len([]rune(str)))
+	fmt.Println("current time:",time.Now().Format(*timeFormat))
+	fmt.Println("args(raws)",os.Args)
+	fmt.Println("args (after flag parsing):", flag.Args())
 
-	for i,r := range str{
-		fmt.Printf("索引:%d\n字符:%c\nUnicode:%U\n",i,r,r)
+	text :="Go语言"
+	fmt.Printf("text=%q bytes=%d runes=%d\n ",text,len(text),utf8.RuneCountInString(text))
+	// idx是UTF-8 字节偏移， 不是字符序号i，中文占用3字节，所以出现偏移
+	for idx,r := range text{
+		fmt.Printf("idx=%d,rune=%c\n",idx,r)
 	}
-
 }
